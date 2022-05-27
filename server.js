@@ -55,6 +55,24 @@ const server = http.createServer((req, res) => {
           roundResult = "win";
         }
       }
+      else if (params["choice"] === "paper") {
+        if (serverChoice === "rock") {
+          roundResult = "win";
+        } else if (serverChoice === "paper") {
+          roundResult = "tie";
+        } else if (serverChoice === "scissors") {
+          roundResult = "loss";
+        }
+      }
+      else if (params["choice"] === "scissors") {
+        if (serverChoice === "rock") {
+          roundResult = "loss";
+        } else if (serverChoice === "paper") {
+          roundResult = "win";
+        } else if (serverChoice === "scissors") {
+          roundResult = "tie";
+        }
+      }
       const objToJson = {
         computerChoice: serverChoice,
         result: roundResult,
