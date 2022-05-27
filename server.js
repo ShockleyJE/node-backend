@@ -4,6 +4,16 @@ const url = require("url");
 const querystring = require("querystring");
 const figlet = require("figlet");
 
+function rps() {
+  rand = Math.random();
+  if (rand < 1 / 3) {
+    return "rock";
+  } else if (rand < 2 / 3) {
+    return "paper";
+  } else {
+    return "scissors";
+  }
+}
 const server = http.createServer((req, res) => {
   const page = url.parse(req.url).pathname;
   const params = querystring.parse(url.parse(req.url).query);
@@ -29,11 +39,17 @@ const server = http.createServer((req, res) => {
   } else if (page == "/api") {
     if ("student" in params) {
       if (params["student"] == "leon") {
+        console.log("Hello, I am alive");
         res.writeHead(200, { "Content-Type": "application/json" });
+        let flipRes = Math.ceil(Math.random() * 2) === 1 ? "heads" : "tails";
+        let rockPaperScissors = rps();
+        console.log(rockPaperScissors);
         const objToJson = {
           name: "leon",
           status: "Boss Man",
           currentOccupation: "Baller",
+          flip: flipRes,
+          rpsResult: rockPaperScissors,
         };
         res.end(JSON.stringify(objToJson));
       } //student = leon
