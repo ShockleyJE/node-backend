@@ -36,6 +36,31 @@ const server = http.createServer((req, res) => {
       res.write(data);
       res.end();
     });
+  } else if (page == "/rockpaperscissors") {
+    fs.readFile("rockpaperscissors.html", function (err, data) {
+      res.writeHead(200, { "Content-Type": "text/html" });
+      res.write(data);
+      res.end();
+    });
+  } else if (page == "/rps") {
+    if ("choice" in params) {
+      let serverChoice = rps();
+      let roundResult;
+      if (params["choice"] === "rock") {
+        if (serverChoice === "rock") {
+          roundResult = "tie";
+        } else if (serverChoice === "paper") {
+          roundResult = "loss";
+        } else if (serverChoice === "scissors") {
+          roundResult = "win";
+        }
+      }
+      const objToJson = {
+        computerChoice: serverChoice,
+        result: roundResult,
+      };
+      res.end(JSON.stringify(objToJson));
+    }
   } else if (page == "/api") {
     if ("student" in params) {
       if (params["student"] == "leon") {
@@ -71,6 +96,12 @@ const server = http.createServer((req, res) => {
     });
   } else if (page == "/js/main.js") {
     fs.readFile("js/main.js", function (err, data) {
+      res.writeHead(200, { "Content-Type": "text/javascript" });
+      res.write(data);
+      res.end();
+    });
+  } else if (page == "/js/rockpaperscissors.js") {
+    fs.readFile("js/rockpaperscissors.js", function (err, data) {
       res.writeHead(200, { "Content-Type": "text/javascript" });
       res.write(data);
       res.end();
